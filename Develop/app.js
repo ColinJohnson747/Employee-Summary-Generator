@@ -74,6 +74,8 @@ function addMember() {
         createIntern();
       } else {
         console.log(employees);
+        const html = render(employees);
+        return writeFileAsync("../output/team.html", html);
       }
     });
 }

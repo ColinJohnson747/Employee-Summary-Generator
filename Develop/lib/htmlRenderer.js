@@ -3,25 +3,25 @@ const fs = require("fs");
 const app = require("../app");
 const templatesDir = path.resolve(__dirname, "../templates");
 
-const render = (employee) => {
+const render = (employees) => {
   const html = [];
 
   html.push(
-    employee
+    employees
       .filter((employee) => employee.getRole() === "Manager")
       .map((manager) => renderManager(manager))
   );
   html.push(
-    employee
+    employees
       .filter((employee) => employee.getRole() === "Engineer")
       .map((engineer) => renderEngineer(engineer))
   );
   html.push(
-    employee
+    employees
       .filter((employee) => employee.getRole() === "Intern")
       .map((intern) => renderIntern(intern))
   );
-
+console.log(html)
   return renderMain(html.join(""));
 };
 
