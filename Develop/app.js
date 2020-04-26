@@ -4,7 +4,9 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
+const util = require("util");
 
+const writeFileAsync = util.promisify(fs.writeFile);
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
@@ -13,12 +15,7 @@ const render = require("./lib/htmlRenderer");
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
-const teamMembers = [
-  //   new Manager("Manny", 1, "manny@heiscool.com", 200),
-  //   new Engineer("Chaz", 2, "chaz@heiscool.com", "viachaz"),
-  //   new Intern("vas", 3, "vas@heiscool.com", "UofA"),
-  //   new Intern("Caleb", 4, "caleb@heiscool.com", "ASU")
-];
+const employees = [];
 
 function createManager() {
   inquirer
@@ -51,7 +48,7 @@ function createManager() {
         answers.email,
         parseInt(answers.office)
       );
-      teamMembers.push(manager);
+      employees.push(manager);
       addMember();
     });
 }
@@ -76,7 +73,7 @@ function addMember() {
       } else if (answer.type === "Intern") {
         createIntern();
       } else {
-        render(teamMembers);
+        console.log(employees);
       }
     });
 }
@@ -112,7 +109,7 @@ function createEngineer() {
         answers.email,
         answers.github
       );
-      teamMembers.push(engineer);
+      employees.push(engineer);
       addMember();
     });
 }
@@ -148,7 +145,7 @@ function createIntern() {
         answers.email,
         answers.school
       );
-      teamMembers.push(intern);
+      employees.push(intern);
       addMember();
     });
 }
